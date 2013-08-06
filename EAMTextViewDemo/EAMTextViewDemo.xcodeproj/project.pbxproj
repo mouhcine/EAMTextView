@@ -118,7 +118,7 @@
 				4D37A1C417B17371008A5990 /* EAMTextView.m */,
 			);
 			name = EAMTextView;
-			path = ../../../EAMTextView;
+			path = ../../EAMTextView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,6 +315,7 @@
 				4D37A1C117B17337008A5990 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
