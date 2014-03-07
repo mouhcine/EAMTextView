@@ -29,7 +29,9 @@ static CGFloat const EAMTextViewMaximumHeight = CGFLOAT_MAX;
 static NSTimeInterval const EAMTextViewAutoresizingAnimationDuration = 0.2f;
 static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
 
-@implementation EAMTextView
+@implementation EAMTextView {
+    UIEdgeInsets _placeholderInsets;
+}
 
 @synthesize placeholderColor = _placeholderColor;
 
@@ -60,6 +62,12 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
     _minimumHeight = EAMTextViewMinimumHeight;
     _maximumHeight = EAMTextViewMaximumHeight;
     _autoresizingAnimationDuration = EAMTextViewAutoresizingAnimationDuration;
+    _placeholderInsets = UIEdgeInsetsMake(EAMTextViewPlaceholderInset, EAMTextViewPlaceholderInset, 0, 0);
+
+    if ([UIDevice.currentDevice.systemVersion compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+        _placeholderInsets.left = EAMTextViewPlaceholderInset / 2.0f;
+    }
+
     [self _startObservingTextChangeNotification];
 }
 
@@ -114,7 +122,7 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
 
 - (CGRect)_placeholderRectInRect:(CGRect)rect
 {
-    return CGRectInset(rect, EAMTextViewPlaceholderInset, EAMTextViewPlaceholderInset);
+    return CGRectInset(rect, _placeholderInsets.left, _placeholderInsets.top);
 }
 
 - (BOOL)_shouldDrawPlaceholder
@@ -159,9 +167,10 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
 {
     if (self.autoresizesVertically) {
         // stay within min and max limit
-        CGFloat newHeight = MIN(self.contentSize.height, self.maximumHeight);
+        CGSize textViewSize = [self sizeThatFits:CGSizeMake(self.frame.size.width, FLT_MAX)];
+        CGFloat newHeight = MIN(textViewSize.height, self.maximumHeight);
         newHeight = MAX(newHeight, self.minimumHeight);
-        
+
         CGFloat oldHeight = self.frame.size.height;
         if (oldHeight != newHeight) {
             
