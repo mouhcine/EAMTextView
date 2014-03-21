@@ -168,7 +168,7 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
     if (self.autoresizesVertically) {
         // stay within min and max limit
         CGSize textViewSize = [self sizeThatFits:CGSizeMake(self.frame.size.width, FLT_MAX)];
-        CGFloat newHeight = MIN(textViewSize.height, self.maximumHeight);
+        CGFloat newHeight = MIN(floorf(textViewSize.height), self.maximumHeight);
         newHeight = MAX(newHeight, self.minimumHeight);
 
         CGFloat oldHeight = self.frame.size.height;
@@ -179,25 +179,35 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
             CGFloat heightDifference = newHeight - oldHeight;
             newFrame.size.height += heightDifference;
             
-            // Animate change
-            [UIView animateWithDuration:self.autoresizingAnimationDuration
-                                  delay:0.0f
-                                options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
-                             animations:^{
-                                 if ([self.delegate respondsToSelector:@selector(textView:willChangeFromHeight:toHeight:)]) {
-                                     [self.delegate textView:self
-                                        willChangeFromHeight:oldHeight
-                                                    toHeight:newHeight];
-                                 }
-                                 self.frame = newFrame;
-                             }
-                             completion:^(BOOL finished) {
-                                 if ([self.delegate respondsToSelector:@selector(textView:didChangeFromHeight:toHeight:)]) {
-                                     [self.delegate textView:self
-                                         didChangeFromHeight:oldHeight
-                                                    toHeight:newHeight];
-                                 }
-                             }];
+            // Animation blocks
+            void (^animationBlock)() = ^{
+                if ([self.delegate respondsToSelector:@selector(textView:willChangeFromHeight:toHeight:)]) {
+                    [self.delegate textView:self
+                       willChangeFromHeight:oldHeight
+                                   toHeight:newHeight];
+                }
+                self.frame = newFrame;
+            };
+            void (^completionBlock)(BOOL) = ^(BOOL finished) {
+                if ( [self.delegate respondsToSelector:@selector(textView:didChangeFromHeight:toHeight:)] ) {
+                    [self.delegate textView:self
+                        didChangeFromHeight:oldHeight
+                                   toHeight:newHeight];
+                }
+            };
+            
+            // Animate change if needed
+            if ( self.autoresizingAnimationDuration > 0 ) {
+                [UIView animateWithDuration:self.autoresizingAnimationDuration
+                                      delay:0.0f
+                                    options:UIViewAnimationOptionAllowUserInteraction |
+                 UIViewAnimationOptionBeginFromCurrentState
+                                 animations:animationBlock
+                                 completion:completionBlock];
+            } else {
+                animationBlock();
+                completionBlock(YES);
+            }
         }
     }
     [self setNeedsDisplay];

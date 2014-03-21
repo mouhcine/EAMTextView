@@ -92,21 +92,22 @@
 /**
  *	The minimum height for the text view.
  *
- *  The default value is 0.
+ *  @discussion The default value is 0.
  */
 @property (nonatomic) CGFloat minimumHeight;
 
 /**
  *	The maximum height for the text view.
  *
- *  The default value is CGFloat_MAX.
+ *  @discussion The default value is CGFloat_MAX.
  */
 @property (nonatomic) CGFloat maximumHeight;
 
 /**
  *	The autoresizing animation duration.
  *
- *  The default value is 0.2 .
+ *  @discussion The default value is 0.2.
+ *  If you set this value to 0, frame will be changed immediately without animations.
  */
 @property (nonatomic) NSTimeInterval autoresizingAnimationDuration;
 
