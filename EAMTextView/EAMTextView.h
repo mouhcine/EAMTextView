@@ -111,9 +111,4 @@
  */
 @property (nonatomic) NSTimeInterval autoresizingAnimationDuration;
 
-/**
- *  Clears the placeholder text.
- */
-- (void)clearPlaceholder;
-
 @end
