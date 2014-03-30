@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'EAMTextView'
-  s.version      = '0.0.2'
+  s.version      = '0.0.3'
   s.summary      = 'EAMTextView is UITextView subclass that adds placeholder and vertical autoresizing support.'
   s.homepage     = 'https://github.com/mouhcine/EAMTextView'
 
