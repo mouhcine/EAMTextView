@@ -120,6 +120,12 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
     }
 }
 
+- (void)clearPlaceholder
+{
+    self.placeholder = nil;
+    [self setNeedsDisplay];
+}
+
 - (CGRect)_placeholderRectInRect:(CGRect)rect
 {
     return CGRectInset(rect, _placeholderInsets.left, _placeholderInsets.top);
