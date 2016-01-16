@@ -34,6 +34,7 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
 }
 
 @synthesize placeholderColor = _placeholderColor;
+@dynamic delegate;
 
 #pragma mark -
 #pragma mark Initialization
