@@ -39,7 +39,7 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
 #pragma mark -
 #pragma mark Initialization
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -48,7 +48,7 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
