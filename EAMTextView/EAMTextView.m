@@ -98,7 +98,7 @@ static CGFloat const EAMTextViewPlaceholderInset = 8.0f;
 - (void)setPlaceholder:(NSString *)placeholder
 {
     if (![_placeholder isEqualToString:placeholder]) {
-        _placeholder = placeholder;
+        _placeholder = [placeholder copy];
         [self setNeedsDisplay];
     }
 }

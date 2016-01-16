@@ -73,7 +73,7 @@
  *  
  *  @discussion The default value is nil.
  */
-@property (nonatomic, strong) NSString *placeholder;
+@property (nonatomic, copy) NSString *placeholder;
 
 /**
  *	The color of the placeholder.
